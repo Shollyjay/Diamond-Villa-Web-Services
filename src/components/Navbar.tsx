@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -19,6 +20,10 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // Pages where the hero section has a light background (white or gray-light)
+  const isLightPage = ["/projects", "/process", "/blog", "/terms", "/privacy"].includes(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +51,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               className={`text-sm font-medium transition-colors hover:text-gold ${
-                scrolled ? "text-navy" : "text-white/90"
+                scrolled || isLightPage ? "text-navy" : "text-white/90"
               }`}
             >
               {link.name}
@@ -66,7 +71,7 @@ export default function Navbar() {
           className="md:hidden text-navy p-2"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X className={scrolled ? "text-navy" : "text-white"} /> : <Menu className={scrolled ? "text-navy" : "text-white"} />}
+          {isOpen ? <X className={scrolled || isLightPage ? "text-navy" : "text-white"} /> : <Menu className={scrolled || isLightPage ? "text-navy" : "text-white"} />}
         </button>
       </div>
 
