@@ -12,7 +12,6 @@ const navLinks = [
   { name: "Services", href: "/services" },
   { name: "Projects", href: "/projects" },
   { name: "Process", href: "/process" },
-  { name: "Pricing", href: "/pricing" },
   { name: "Decision Maker", href: "/decision-maker" },
   { name: "Contact", href: "/contact" },
 ];
@@ -40,8 +39,8 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" className="flex items-center bg-white p-1 rounded">
-          <Image src="/logo.jpg" alt="DiamondVilla Logo" width={180} height={50} className="object-contain h-10 w-auto" />
+        <Link href="/" className="flex items-center">
+          <Image src="/logo.png" alt="DiamondVilla Logo" width={180} height={50} className="object-contain h-10 w-auto" />
         </Link>
 
         {/* Desktop Nav */}

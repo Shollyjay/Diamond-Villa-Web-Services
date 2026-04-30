@@ -165,33 +165,15 @@ export default function ContactPage() {
               </motion.div>
 
               <div className="space-y-6">
-                <div className="flex items-center gap-6 p-6 rounded-2xl bg-gray-light border border-gray-200">
-                  <div className="w-12 h-12 bg-navy text-gold rounded-full flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-charcoal/40 text-xs font-bold uppercase tracking-widest">Email Us</div>
-                    <div className="text-navy font-bold text-lg">diamondvilla25@gmail.com</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6 p-6 rounded-2xl bg-gray-light border border-gray-200">
-                  <div className="w-12 h-12 bg-navy text-gold rounded-full flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-charcoal/40 text-xs font-bold uppercase tracking-widest">Call Us</div>
-                    <div className="text-navy font-bold text-lg">+1 (800) 555-0123</div>
-                  </div>
-                </div>
-
+                {/* Contact details removed as per request */}
               </div>
 
               <div className="pt-8 border-t border-gray-100 text-center lg:text-left">
-                <h4 className="text-navy font-bold mb-4">Follow Our Growth</h4>
-                <div className="flex justify-center lg:justify-start gap-4">
-                  {["LinkedIn", "Twitter", "Instagram", "Clutch"].map((platform) => (
-                    <a key={platform} href="#" className="text-charcoal/40 hover:text-gold font-bold transition-colors">{platform}</a>
-                  ))}
+                <h4 className="text-navy font-bold mb-4">Join Our Community</h4>
+                <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                  <a href="https://www.facebook.com/share/g/17XSwc5mJh/" target="_blank" rel="noopener noreferrer" className="text-charcoal/40 hover:text-gold font-bold transition-colors">
+                    Facebook Group
+                  </a>
                 </div>
               </div>
             </div>
