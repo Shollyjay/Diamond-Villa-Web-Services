@@ -7,13 +7,41 @@ import { useState } from "react";
 
 export default function ContactPage() {
   const [formState, setFormState] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    businessType: "E-commerce",
+    budget: "$2K - $10K",
+    details: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState("submitting");
-    setTimeout(() => {
-      setFormState("success");
-    }, 2000);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormState("success");
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.error || "Failed to send message. Please try again.");
+        setFormState("idle");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setErrorMessage("Something went wrong. Please check your connection.");
+      setFormState("idle");
+    }
   };
 
   return (
@@ -69,12 +97,19 @@ export default function ContactPage() {
                   <>
                     <h2 className="text-3xl font-bold text-navy mb-8">Send a Direct Message</h2>
                     <form onSubmit={handleSubmit} className="space-y-6">
+                      {errorMessage && (
+                        <div className="bg-red-50 text-red-500 p-4 rounded-xl text-sm font-medium border border-red-100">
+                          {errorMessage}
+                        </div>
+                      )}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label className="text-sm font-bold uppercase tracking-widest text-charcoal/40 ml-1">Full Name</label>
                           <input
                             required
                             type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             placeholder="John Doe"
                             className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
                           />
@@ -84,6 +119,8 @@ export default function ContactPage() {
                           <input
                             required
                             type="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             placeholder="john@company.com"
                             className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
                           />
@@ -93,7 +130,11 @@ export default function ContactPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label className="text-sm font-bold uppercase tracking-widest text-charcoal/40 ml-1">Business Type</label>
-                          <select className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none">
+                          <select 
+                            value={formData.businessType}
+                            onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
+                            className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none"
+                          >
                             <option>E-commerce</option>
                             <option>SaaS / Tech</option>
                             <option>Professional Services</option>
@@ -102,7 +143,11 @@ export default function ContactPage() {
                         </div>
                         <div className="space-y-2">
                           <label className="text-sm font-bold uppercase tracking-widest text-charcoal/40 ml-1">Estimated Budget</label>
-                          <select className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none">
+                          <select 
+                            value={formData.budget}
+                            onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                            className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none"
+                          >
                             <option>$2K - $10K</option>
                             <option>$10K - $50K</option>
                             <option>$50K - $100K</option>
@@ -116,6 +161,8 @@ export default function ContactPage() {
                         <textarea
                           required
                           rows={6}
+                          value={formData.details}
+                          onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                           placeholder="Tell us about your project and goals..."
                           className="w-full bg-gray-light border border-gray-200 rounded-xl px-6 py-4 outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all resize-none"
                         ></textarea>
