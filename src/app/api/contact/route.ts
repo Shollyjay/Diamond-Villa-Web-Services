@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       from: 'DiamondVilla <onboarding@resend.dev>',
       to: 'diamondvilla25@gmail.com',
       subject: `💎 New Project Inquiry: ${name}`,
-      reply_to: email,
+      replyTo: email,
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px 20px; color: #1a1a1a; max-width: 600px; margin: auto; background-color: #ffffff;">
           <div style="text-align: center; margin-bottom: 40px;">
